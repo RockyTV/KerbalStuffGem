@@ -40,3 +40,9 @@ For a *slightly* more detailed version of the gem's methods, take a look [here](
 ## License
 
 licensed under MIT License Copyright (c) 2008  Scott Chacon. See LICENSE for further details.
+
+
+## Contributing
+
+If you want to contribute, feel free to do so! 
+Just fork the repo, make your changes, and then submit the pull-request.
