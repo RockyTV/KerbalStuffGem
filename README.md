@@ -28,9 +28,9 @@ ks = KerbalStuff # Initialize the wrapper
 
 ks.SearchMod(string) # will return a JSON object containing the search results
 ks.SearchUser(string)
-ks.User(Username) # will return a JSON object containing information about the specified user
-ks.Mod(ModID) # will return a JSON object containing information about the specified mod
-ks.GetLatestVersion(ModID) # will return a JSON object containing information about the last version released for the specified mod.
+ks.User(string) # will return a JSON object containing information about the specified user
+ks.Mod(integer) # will return a JSON object containing information about the specified mod
+ks.GetLatestVersion(integer) # will return a JSON object containing information about the last version released for the specified mod.
 ```
 
 ## Documentation
