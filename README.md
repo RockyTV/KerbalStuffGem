@@ -4,7 +4,7 @@ KerbalStuff API Wrapper for Ruby
 A simple Ruby API Wrapper for KerbalStuff
 
 
-## Code Status
+## Gem Status
 [![Gem Version](https://badge.fury.io/rb/KerbalStuff.png)](http://badge.fury.io/rb/KerbalStuff)
 
 
