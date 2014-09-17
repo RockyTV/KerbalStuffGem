@@ -33,6 +33,10 @@ ks.Mod(ModID) # will return a JSON object containing information about the speci
 ks.GetLatestVersion(ModID) # will return a JSON object containing information about the last version released for the specified mod.
 ```
 
+## Documentation
+For a *slightly* more detailed version of the gem's methods, take a look [here](http://rubydoc.info/gems/KerbalStuff/0.1.2/frames).
+
+
 ## License
 
 licensed under MIT License Copyright (c) 2008  Scott Chacon. See LICENSE for further details.
