@@ -10,6 +10,6 @@ Gem::Specification.new do |s|
 	s.homepage	=
 		'https://github.com/RockyTV/KerbalStuffGem'
 	s.license	= 'MIT'
-	
+	s.extra_rdoc_files = ['README.md']
 	s.required_ruby_version = '>= 1.9.3'
 end
