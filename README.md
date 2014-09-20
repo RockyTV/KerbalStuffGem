@@ -15,6 +15,13 @@ You can install the gem like this:
     gem install kerbalstuff
   
     
+## Updating
+
+When a new update is released, you can update your gem like this:
+
+    gem update kerbalstuff
+    
+    
 ## Examples
 
 Here are some examples of how you can use the wrapper.
