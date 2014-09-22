@@ -33,13 +33,16 @@ require 'kerbalstuff' # Require the Gem
 ```ruby
 ks = KerbalStuff # Initialize the wrapper
 
-ks.SearchMod(string) # will return a hash containing the search results
-ks.SearchUser(string)
-ks.User(string) # will return a hash containing information about the specified user
-ks.Mod(integer) # will return a hash containing information about the specified mod
-ks.GetLatestVersion(integer) # will return a hash containing information about the last version released for the specified mod.
-ks.GetBasicModInfo(integer) # will return a hash containing basic information about the mod - name, author, downloads, url, latest version
-ks.GetBasicUserInfo(integer) # will return a hash containing basic information about the user - name, mods, irc nick, forum nick.
+ks.search_mod(string) # will return a hash containing the search results
+ks.search_user(string)
+
+ks.user(string) # will return a hash containing information about the specified user
+ks.mod(integer) # will return a hash containing information about the specified mod
+
+ks.get_latest_version(integer) # will return a hash containing information about the last version released for the specified mod.
+
+ks.get_basic_mod_info(integer) # will return a hash containing basic information about the mod - name, author, downloads, url, latest version
+ks.get_basic_user_info(integer) # will return a hash containing basic information about the user - name, mods, irc nick, forum nick.
 ```
 
 ## Documentation

@@ -4,11 +4,11 @@ require 'uri'
 
 module KerbalStuff
 
-	API_URL = "https://kerbalstuff.com/api"
-	SEARCH_MOD = "https://kerbalstuff.com/api/search/mod?query="
-	SEARCH_USER = "https://kerbalstuff.com/api/search/user?query="
-	USER = "https://kerbalstuff.com/api/user/"
-	MOD = "https://kerbalstuff.com/api/mod/"
+	api_url = "https://kerbalstuff.com/api"
+	search_mod = "https://kerbalstuff.com/api/search/mod?query="
+	search_user = "https://kerbalstuff.com/api/search/user?query="
+	user_url = "https://kerbalstuff.com/api/user/"
+	mod_url = "https://kerbalstuff.com/api/mod/"
 	
 	def self.get_https_response(url)
 		@url = URI.parse(URI.escape(url))
@@ -26,8 +26,8 @@ module KerbalStuff
 	#
 	# @param query [String] the keyword/phrase to search for.
 	# @return [Hash] A parsed JSON output containing the mods which were found.
-	def self.SearchMod(query)
-		response = get_https_response("#{SEARCH_MOD}#{query}")
+	def self.search_mod(query)
+		response = get_https_response("#{search_mod}#{query}")
 		JSON.parse(response.body)
 	end
 	
@@ -35,8 +35,8 @@ module KerbalStuff
 	#
 	# @param query [String] the keyword/phrase to search for.
 	# @return [Hash] A parsed JSON output containing the users which were found.
-	def self.SearchUser(query)
-		response = get_https_response("#{SEARCH_USER}#{query}")
+	def self.search_user(query)
+		response = get_https_response("#{search_user}#{query}")
 		JSON.parse(response.body)
 	end
 	
@@ -44,10 +44,10 @@ module KerbalStuff
 	#
 	# @param username [String] the username to retrieve its information.
 	# @return [Hash] A parsed JSON output containing the information about the user.
-	def self.User(username)
+	def self.user(username)
 		raise "username cannot be nil" unless username.length > 0
 		
-		response = get_https_response("#{USER}#{username}")
+		response = get_https_response("#{user_url}#{username}")
 		JSON.parse(response.body)
 	end
 
@@ -55,21 +55,21 @@ module KerbalStuff
 	#
 	# @param id [Fixnum] the id to retrieve its information.
 	# @return [Hash] A parsed JSON output containing the information about the mod.
-	def self.Mod(id)
+	def self.mod(id)
 		raise "id cannot be nil" unless id.is_a?(Integer) and id > 0
 		
-		response = get_https_response("#{MOD}#{id}")
+		response = get_https_response("#{mod_url}#{id}")
 		JSON.parse(response.body)
 	end
 	
-	# Retrieves the information about the slast released version of the specified mod.
+	# Retrieves the information about the last released version of the specified mod.
 	#
 	# @param username [Fixnum] the id to retrieve information of its latest version released.
 	# @return [Hash] A parsed JSON output containing the information about the latest version released.
-	def self.GetLatestVersion(id)
+	def self.get_latest_version(id)
 		raise "id cannot be nil" unless id.is_a?(Integer) and id > 0
 		
-		response = get_https_response("#{MOD}#{id}/latest")
+		response = get_https_response("#{mod}#{id}/latest")
 		JSON.parse(response.body)
 	end
 	
@@ -77,8 +77,8 @@ module KerbalStuff
 	#
 	# @param id [Fixnum] The id of the mod to retrieve information for.
 	# @return [Hash] A hash containing basic mod info.
-	def self.GetBasicModInfo(id)
-		oldHash = Mod(id)
+	def self.get_basic_mod_info(id)
+		oldHash = mod(id)
 		
 		modHash = Hash.new()
 		modHash["name"] = oldHash["name"]
@@ -95,14 +95,14 @@ module KerbalStuff
 	#
 	# @param username [String] The user to gather information for.
 	# @return [Hash] A hash containing the basic user info.
-	def self.GetBasicUserInfo(string)
-		oldHash = User(string)
+	def self.get_basic_user_info(string)
+		oldHash = user(string)
 		
 		userHash = Hash.new()
 		userHash["username"] = oldHash["username"]
 		userHash["mods"] = oldHash["mods"]
 		userHash["ircNick"] = oldHash["ircNick"]
-		userHash["forumUsername"] = oldHash["forumUsername"]
+		userHash["forumusername"] = oldHash["forumusername"]
 		
 		userHash
 	end
