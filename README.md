@@ -33,25 +33,23 @@ require 'kerbalstuff' # Require the Gem
 ```ruby
 ks = KerbalStuff # Initialize the wrapper
 
-ks.search_mod(string) # will return a hash containing the search results
-ks.search_user(string)
+ks.search_mod(string) # returns an array containing Mod objects.
+ks.search_user(string) # returns an array containing User objects.
 
-ks.user(string) # will return a hash containing information about the specified user
-ks.mod(integer) # will return a hash containing information about the specified mod
+ks.get_mod(integer) # returns a Mod object containing the information about the mod.
+ks.get_user(string) # returns a User object containing the information about the user.
 
-ks.get_latest_version(integer) # will return a hash containing information about the last version released for the specified mod.
+ks.get_latest_mod_version(integer) # retuns a ModVersion object containing information about the version.
 
-ks.get_basic_mod_info(integer) # will return a hash containing basic information about the mod - name, author, downloads, url, latest version
-ks.get_basic_user_info(integer) # will return a hash containing basic information about the user - name, mods, irc nick, forum nick.
 ```
 
 ## Documentation
-For a *slightly* more detailed version of the gem's methods, take a look [here](http://rubydoc.info/gems/KerbalStuff/0.1.2/frames).
+For a *slightly* more detailed version of the gem's methods, take a look [here](http://rubydoc.info/gems/KerbalStuff/).
 
 
 ## License
 
-licensed under MIT License Copyright (c) 2008  Scott Chacon. See LICENSE for further details.
+licensed under MIT License Copyright (c) 2014 Alexandre Oliveira. See LICENSE for further details.
 
 
 ## Contributing
