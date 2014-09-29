@@ -4,10 +4,11 @@ require 'uri'
 
 module KerbalStuff
 
-	api_url = "https://kerbalstuff.com/api"
-	user_url = "https://kerbalstuff.com/api/user/"
-	mod_url = "https://kerbalstuff.com/api/mod/"
-	
+	autoload :VERSION, 'kerbalstuff/version'
+	autoload :Mod, 'kerbalstuff/mod'
+	autoload :ModVerison, 'kerbalstuff/mod'
+	autoload :User, 'kerbalstuff/user'
+
 	def self.get_https_response(url)
 		@url = URI.parse(URI.escape(url))
 		http = Net::HTTP.new(@url.host, @url.port)
@@ -30,125 +31,78 @@ module KerbalStuff
 			else
 				return json
 			end
+		else
+			return json
 		end
 	end
 	
 	# Searches for mods with the specified keyword/phrase.
 	#
 	# @param query [String] the keyword/phrase to search for.
-	# @return [Hash] A parsed JSON output containing the mods which were found. Will return a [String] if no results were found.
+	# @return [Array] An array containing the results found. If no result was found, will return a String.
 	def self.search_mod(query)
 		res = get_json("https://kerbalstuff.com/api/search/mod?query=#{query}")
+		
+		resArr = []
 		
 		if res.length == 0
 			return "No results were found for '#{query}'."
 		else
-			return res
+			res.each do |mod|
+				resArr.push(Mod.new(mod))
+			end
+			return resArr
 		end
 	end
 	
 	# Searches for users with the specified keyword/phrase.
 	#
 	# @param query [String] the keyword/phrase to search for.
-	# @return [Hash] A parsed JSON output containing the users which were found. Will return a [String] if no results were found.
+	# @return [Array] An array containing the results found. If no result was found, will return a String.
 	def self.search_user(query)
 		res = get_json("https://kerbalstuff.com/api/search/user?query=#{query}")
+		
+		resArr = []
 		
 		if res.length == 0
 			return "No results were found for '#{query}'."
 		else
-			return res
+			res.each do |user|
+				resArr.push(User.new(user))
+			end
+			return resArr
 		end
 	end
 	
-	# Retrieves information about the specified user.
+	# Retrieves the specified mod information.
 	#
-	# @param username [String] the username to retrieve its information.
-	# @return [Hash] A parsed JSON output containing the information about the user. Will return a [String] if no users were found.
-	def self.user(username)
-		raise "username cannot be nil" unless username.length > 0
+	# @param id [Integer] the id of the mod to retrieve information for.
+	# @return [Mod] A Mod object containing the information about the mod.
+	def self.get_mod(id)
+		raise "id must be an Integer" unless id.is_a?(Integer)
 		
-		res = get_json("https://kerbalstuff.com/api/user/#{username}")
-		
-		if res.include? 'error'
-			return res[1]
-		else
-			return res
-		end
-	end
-
-	# Retrieves the information about the specified mod.
-	#
-	# @param id [Fixnum] the id to retrieve its information.
-	# @return [Hash] A parsed JSON output containing the information about the mod. Will return a [String] if no mods were found.
-	def self.mod(id)
-		raise "id cannot be nil" unless id.is_a?(Integer)
-		
-		res = get_json("https://kerbalstuff.com/api/mod/#{id}")
-		
-		if res.include? 'error'
-			return res[1]
-		else
-			return res
-		end
+		return Mod.new(get_json("https://kerbalstuff.com/api/mod/#{id}"))
 	end
 	
-	# Retrieves the information about the last released version of the specified mod.
+	# Retrieves the specified user information.
 	#
-	# @param username [Fixnum] the id to retrieve information of its latest version released.
-	# @return [Hash] A parsed JSON output containing the information about the latest version released.
-	def self.get_latest_version(id)
-		raise "id cannot be nil" unless id.is_a?(Integer)
+	# @param username [String] the username of the user to retrieve information for.
+	# @return [User] A User object containing the information about the user.
+	def self.get_user(username)
+		raise "username must be a String" unless username.is_a?(String)
+		raise "username cannot be an empty string" unless username.length > 0
 		
-		res = get_json("https://kerbalstuff.com/api/mod/#{id}/latest")
-		
-		if res.include? 'error'
-			return res[1]
-		else
-			return res
-		end
+		return User.new(get_json("https://kerbalstuff.com/api/user/#{username}"))
 	end
 	
-	# Retrieves basic mod information - name, author, description, how many times it was downloaded, url to the mod and latest version.
+	# Retrieves the latest version of the specified mod.
 	#
-	# @param id [Fixnum] The id of the mod to retrieve information for.
-	# @return [Hash] A hash containing basic mod info.
-	def self.get_basic_mod_info(id)
-		oldHash = mod(id)
+	# @param id [Integer] the id of the mod to retrieve the latest version released.
+	# @return [ModVersion] A ModVersion object containing information about the version.
+	def self.get_latest_mod_version(id)
+		raise "id must be an Integer" unless id.is_a?(Integer)
 		
-		if oldHash.is_a?(String)
-			return oldHash
-		else
-			modHash = Hash.new()
-			modHash["name"] = oldHash["name"]
-			modHash["author"] = oldHash["author"]
-			modHash["description"] = oldHash["short_description"]
-			modHash["downloads"] = oldHash["downloads"]
-			modHash["url"] = "https://kerbalstuff.com/mod/#{id}/}"
-			modHash["latest_version"] = oldHash["versions"][0]["friendly_version"]
-			
-			return modHash
-		end
-	end
-	
-	# Retrieves basic user info - username, mods, irc nick and forum username.
-	#
-	# @param username [String] The user to gather information for.
-	# @return [Hash] A hash containing the basic user info.
-	def self.get_basic_user_info(username)
-		oldHash = user(username)
-		
-		if oldHash.is_a?(String)
-			return oldHash
-		else
-			userHash = Hash.new()
-			userHash["username"] = oldHash["username"]
-			userHash["mods"] = oldHash["mods"]
-			userHash["ircNick"] = oldHash["ircNick"]
-			userHash["forumusername"] = oldHash["forumusername"]
-		
-			return userHash
-		end
+		return ModVersion.new(get_json("https://kerbalstuff.com/api/mod/#{id}/latest"))
 	end
 	
 end
