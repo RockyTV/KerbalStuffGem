@@ -16,6 +16,7 @@ module KerbalStuff
 			@followers = @json['followers']
 			@default_version_id = @json['default_version_id']
 			@description = @json['description']
+			@license = @json['license']
 			
 			if @json.has_key?('versions')
 				@versions = []
@@ -29,7 +30,7 @@ module KerbalStuff
 		end
 		
 		def to_s
-			"Mod:\nname=#{@name}\nbackground=#{@background}\nauthor=#{@author}\ndownloads=#{@downloads}\nid=#{@id}\nshort_description=\"#{@short_description}\"\nversions=#{@versions}\ndescription_html=\"#{@description_html}\"\nfollowers=#{@followers}\ndefault_version_id=#{@default_version_id}\ndescription=\"#{@description}\"\n"
+			"Mod:\nname=#{@name}\nbackground=#{@background}\nlicense=#{@license}\nauthor=#{@author}\ndownloads=#{@downloads}\nid=#{@id}\nshort_description=\"#{@short_description}\"\nversions=#{@versions}\ndescription_html=\"#{@description_html}\"\nfollowers=#{@followers}\ndefault_version_id=#{@default_version_id}\ndescription=\"#{@description}\"\n"
 		end
 	end
 	
