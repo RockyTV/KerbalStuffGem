@@ -33,13 +33,18 @@ require 'kerbalstuff' # Require the Gem
 ```ruby
 ks = KerbalStuff # Initialize the wrapper
 
-ks.search_mod(string) # returns an array containing Mod objects.
-ks.search_user(string) # returns an array containing User objects.
+ks.search_mod("parts pack") # returns an array containing Mod objects.
+ks.search_user("godarklight") # returns an array containing User objects.
 
-ks.get_mod(integer) # returns a Mod object containing the information about the mod.
-ks.get_user(string) # returns a User object containing the information about the user.
+ks.get_mod(4) # returns a Mod object containing the information about the mod.
+ks.get_user("RockyTV") # returns a User object containing the information about the user.
 
-ks.get_latest_mod_version(integer) # retuns a ModVersion object containing information about the version.
+ks.get_latest_mod_version(4) # returns a ModVersion object containing information about the version.
+
+ks.browse( {:page => 1, :orderby => "name", :order => "asc", :count => 5} ) # returns an Array containing mod objects
+ks.browse_recent( {:page => 1} ) # returns an Array containing mod objects
+ks.browse_featured( {:page => 1} ) # returns an Array containing mod objects
+ks.browse_top( {:page => 1} ) # returns an Array containing mod objects
 
 ```
 
