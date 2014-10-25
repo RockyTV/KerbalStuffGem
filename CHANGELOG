@@ -1,1 +1,3 @@
-Version 0.2.0: Added links to Mod.background and ModVersion.download_path\nAdded support to KerbalStuff browse methods
+0.2.0 (October 25, 2014)
+* Added support for KerbalStuff **browse** methods
+* Added links to Mod.background and ModVersion.download_path
