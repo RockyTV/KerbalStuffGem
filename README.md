@@ -59,4 +59,4 @@ licensed under MIT License Copyright (c) 2014 Alexandre Oliveira. See LICENSE fo
 
 ## Contributing
 
-See [CONTRIBUTING.MD](http://github.com/RockyTV/KerbalStuffGem/blob/master/CONTRIBUTING.MD)
+See [CONTRIBUTING](http://github.com/RockyTV/KerbalStuffGem/blob/master/CONTRIBUTING.md)
