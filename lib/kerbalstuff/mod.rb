@@ -33,7 +33,7 @@ module KerbalStuff
 		end
 		
 		def to_s
-			"Mod:\nname=#{@name}\nbackground=https:""/""/""cdn.mediacru.sh#{@background}\nlicense=#{@license}\nwebsite=#{@website}\ndonations=#{@donations}\nsource_code=#{@source_code}\nauthor=#{@author}\ndownloads=#{@downloads}\nid=#{@id}\nshort_description=\"#{@short_description}\"\nversions=#{@versions}\ndescription_html=\"#{@description_html}\"\nfollowers=#{@followers}\ndefault_version_id=#{@default_version_id}\ndescription=\"#{@description}\"\n"
+			return ["name=#{@name}", "background=https:""/""/""cdn.mediacru.sh#{@background}", "license=#{@license}", "website=#{@website}", "donations=#{@donations}", "source_code=#{@source_code}", "author=#{@author}", "downloads=#{@downloads}", "id=#{@id}", "short_description=\"#{@short_description}\"", "versions=#{@versions}", "description_html=\"#{@description_html}\"", "followers=#{@followers}", "default_version_id=#{@default_version_id}", "description=\"#{@description}\""]
 		end
 	end
 	
@@ -52,7 +52,7 @@ module KerbalStuff
 		end
 		
 		def to_s
-			"ModVersion:\nversion=#{@version}, download=https:""/""/""kerbalstuff.com#{@download_path}, id=#{@id}, ksp_version=#{@ksp_version}, changelog=\"#{@changelog}\"\n"
+			["version=#{@version}", "download=https:""/""/""kerbalstuff.com#{@download_path}", "id=#{@id}", "ksp_version=#{@ksp_version}", "changelog=\"#{@changelog}\""]
 		end
 	end
 end

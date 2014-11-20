@@ -5,7 +5,7 @@ require "kerbalstuff/version"
 Gem::Specification.new do |s|
 	s.name		= 'KerbalStuff'
 	s.version	= KerbalStuff::VERSION
-	s.summary 	= "KerbalStuff"
+	s.summary 	= "KerbalStuff's Ruby API Wrapper"
 	s.description = "A simple API wrapper for KerbalStuff"
 	s.authors	= ["Alexandre Oliveira"]
 	s.email		= 'rockytvbr@gmail.com'

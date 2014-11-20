@@ -22,7 +22,7 @@ module KerbalStuff
 		end
 		
 		def to_s
-			"User:\nircNick=#{@ircNick}\nmods=#{@mods}\ntwitterUsername=#{@twitterUsername}\nusername=#{@username}\nredditUsername=#{@redditUsername}\nforumUsername=#{@forumUsername}\ndescription=\"#{@description}\"\n"
+			return ["ircNick=#{@ircNick}", "mods=#{@mods}", "twitterUsername=#{@twitterUsername}", "username=#{@username}", "redditUsername=#{@redditUsername}", "forumUsername=#{@forumUsername}", "description=\"#{@description}\""]
 		end
 		
 	end

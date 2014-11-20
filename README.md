@@ -59,5 +59,4 @@ licensed under MIT License Copyright (c) 2014 Alexandre Oliveira. See LICENSE fo
 
 ## Contributing
 
-If you want to contribute, feel free to do so! 
-Just fork the repo, make your changes, and then submit the pull-request.
+See [CONTRIBUTING.MD](http://github.com/RockyTV/KerbalStuffGem/CONTRIBUTING.MD)

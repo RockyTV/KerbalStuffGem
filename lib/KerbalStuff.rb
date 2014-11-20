@@ -1,4 +1,5 @@
 require 'net/http'
+require 'net/http/post/multipart'
 require 'json'
 require 'uri'
 
@@ -8,6 +9,7 @@ module KerbalStuff
 	autoload :Mod, 'kerbalstuff/mod'
 	autoload :ModVerison, 'kerbalstuff/mod'
 	autoload :User, 'kerbalstuff/user'
+	autoload :Auth, 'kerbalstuff/auth'
 
 	def self.get_https_response(url)
 		@url = URI.parse(URI.escape(url))
