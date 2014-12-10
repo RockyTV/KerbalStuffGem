@@ -11,6 +11,7 @@ module KerbalStuff
 	autoload :User, 'kerbalstuff/user'
 	autoload :Auth, 'kerbalstuff/auth'
 
+	# @api private
 	def self.get_https_response(url)
 		@url = URI.parse(URI.escape(url))
 		http = Net::HTTP.new(@url.host, @url.port)
@@ -23,6 +24,7 @@ module KerbalStuff
 		response
 	end
 	
+	# @api private
 	def self.get_json(url)
 		response = get_https_response(url)
 		json = JSON.parse(response.body)
@@ -80,6 +82,7 @@ module KerbalStuff
 	#
 	# @param id [Integer] the id of the mod to retrieve information for.
 	# @return [Mod] A Mod object containing the information about the mod.
+	# @raise [ArgumentError] if "id" is not an Integer
 	def self.get_mod(id)
 		raise "id must be an Integer" unless id.is_a?(Integer)
 		
@@ -90,6 +93,8 @@ module KerbalStuff
 	#
 	# @param username [String] the username of the user to retrieve information for.
 	# @return [User] A User object containing the information about the user.
+	# @raise [ArgumentError] if "username" is not a String
+	# @raise [ArgumentError] if "username" is empty
 	def self.get_user(username)
 		raise "username must be a String" unless username.is_a?(String)
 		raise "username cannot be an empty string" unless username.length > 0
@@ -101,19 +106,26 @@ module KerbalStuff
 	#
 	# @param id [Integer] the id of the mod to retrieve the latest version released.
 	# @return [ModVersion] A ModVersion object containing information about the version.
+	# @raise [ArgumentError] if "id" is not an Integer
 	def self.get_latest_mod_version(id)
-		raise "id must be an Integer" unless id.is_a?(Integer)
+		raise ArgumentException, "id must be an Integer" unless id.is_a?(Integer)
 		
 		return ModVersion.new(get_json("https://kerbalstuff.com/api/mod/#{id}/latest"))
 	end
 	
-	#  Browse the website without authentication.
-	#
-	# @param page [Integer] which page of results to retrieve. Valid values: 1-??? (optional)
-	# @param orderby [String] which property of mod use for ordering. Valid values are: name, updated, created. Default: created (required)
-	# @param order [String] which ordering direction to use. Valid values are: asc, desc. Default: asc (required)
-	# @param count [Fixnum] which count of mods to show per page. Valid values are: 1-500. Default: 30 (required)
+	# Browse the website without authentication.
+	# @param browse_params [Hash] browses the website with the specified parameters
+	# @option browse_params [Integer] :page which page of results to retrieve. Valid values: 1-??? (optional)
+	# @option browse_params [String] :orderby which property of mod use for ordering. Valid values are: name, updated, created. Default: created (required)
+	# @option browse_params [String] :order which ordering direction to use. Valid values are: asc, desc. Default: asc (required)
+	# @option browse_params [Fixnum] :count which count of mods to show per page. Valid values are: 1-500. Default: 30 (required)
 	# @return [Array] an array containing the results found.
+	# @raise [ArgumentError] if "page" is not an Integer
+	# @raise [ArgumentError] if "page" is 0
+	# @raise [ArgumentError] if "orderby" is not "name", "updated" or "created"
+	# @raise [ArgumentError] if "order" is not "asc" or "desc"
+	# @raise [ArgumentError] if "count" is 0 or greater than 500
+	# @raise [ArgumentError] if not all parameters are present
 	def self.browse(browse_params = {})
 		page = browse_params[:page] || browse_params["page"]
 		orderby = browse_params[:orderby] || browse_params["orderby"]
@@ -167,8 +179,11 @@ module KerbalStuff
 	
 	# Gets the newest mods on the site
 	#
-	# @param page [Integer] which page of results to retrieve. Valid values: 1-??? (optional)
+	# @param browse_params [Hash] browses the website with the specified parameters
+	# @option browse_params [Integer] :page which page of results to retrieve. Valid values: 1-??? (optional)
 	# @return [Array] an array containing the newest mods on the site.
+	# @raise [ArgumentError] if "page" is not an Integer
+	# @raise [ArgumentError] if "page" is 0
 	def self.browse_recent(browse_params = {})
 		page = browse_params[:page] || browse_params["page"]
 		
@@ -201,8 +216,11 @@ module KerbalStuff
 	
 	# Gets the latest featured mods on the site
 	#
-	# @param page [Integer] which page of results to retrieve. Valid values: 1-??? (optional)
+	# @param browse_params [Hash] browses the website with the specified parameters
+	# @option browse_params [Integer] :page which page of results to retrieve. Valid values: 1-??? (optional)
 	# @return [Array] an array containing the newest mods on the site.
+	# @raise [ArgumentError] if "page" is not an Integer
+	# @raise [ArgumentError] if "page" is 0
 	def self.browse_featured(browse_params = {})
 		page = browse_params[:page] || browse_params["page"]
 		
@@ -235,8 +253,11 @@ module KerbalStuff
 	
 	# Gets the most popular mods on the site
 	#
-	# @param page [Integer] which page of results to retrieve. Valid values: 1-??? (optional)
+	# @param browse_params [Hash] browses the website with the specified parameters
+	# @option [Integer] :page which page of results to retrieve. Valid values: 1-??? (optional)
 	# @return [Array] an array containing the newest mods on the site.
+	# @raise [ArgumentError] if "page" is not an Integer
+	# @raise [ArgumentError] if "page" is 0
 	def self.browse_top(browse_params = {})
 		page = browse_params[:page] || browse_params["page"]
 		
@@ -266,5 +287,7 @@ module KerbalStuff
 			return arr
 		end
 	end
+	
+	private :self.get_json, :self.get_https_response
 	
 end

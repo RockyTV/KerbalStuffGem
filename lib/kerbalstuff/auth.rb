@@ -11,12 +11,14 @@ module KerbalStuff
 
 	class Auth
 	
+		# @api private
 		attr_accessor :cookie
 	
 		# Logs into Kerbal Stuff.
 		#
-		# @param username [String]
-		# @param password [String]
+		# @param params [Hash] Login parameters.
+		# @option params [String] :username KerbalStuff account username
+		# @option params [String] :password KerbalStuff account password
 		# @return [Array] An array with the status of the login.	
 		def self.login(params = {})
 			@username = params['username']
@@ -45,12 +47,13 @@ module KerbalStuff
 		
 		# Creates a new mod. Requires authentication.
 		#
-		# @param name [String] Your new mod's name
-		# @param desc [String] Short description of your mod
-		# @param version [String] The latest friendly version of your mod
-		# @param ksp_ver [String] The KSP version this is compatible with
-		# @param license [String] Your mod's license
-		# @param zipball [File] The actual mod's zip file
+		# @param params [Hash] Create mod parameters.
+		# @option params [String] :name Your new mod's name
+		# @option params [String] :desc Short description of your mod
+		# @option params [String] :version The latest friendly version of your mod
+		# @option params [String] :ksp_ver The KSP version this is compatible with
+		# @option params [String] :license Your mod's license
+		# @option params [File] :zipball The actual mod's zip file
 		# @return [Array] An array containing the published mod info.
 		def self.create_mod(params = {})
 			@name = params['name']
@@ -89,13 +92,15 @@ module KerbalStuff
 		
 		# Publishes an update to an existing mod. Requires authentication. All parameters are required. Parameters are passed by via Hash.
 		#
-		# @param modid [Fixnum] The ID of the mod you want to update
-		# @param version [String] The friendly version number about to be created
-		# @param changelog [String] Markdown changelog
-		# @param ksp_ver [String] The version of KSP this is compatible with
-		# @param notify_followers [String] If "yes", email followers about this update
-		# @param zipball [File] The actual mod's zip file
+		# @param [Hash] params Update mod parameters
+		# @option params [Fixnum] :modid The ID of the mod you want to update
+		# @option params [String] :version The friendly version number about to be created
+		# @option params [String] :changelog Markdown changelog
+		# @option params [String] :ksp_ver The version of KSP this is compatible with
+		# @option params [String] :notify_followers If "yes", email followers about this update
+		# @option params [File] :zipball The actual mod's zip file
 		# @return [Array] A string containing the updated version info.
+		# @raise [ArgumentError] If missing one or more parameters, or if one or more parameters are empty.
 		def self.update_mod(params = {})
 			raise ArgumentError, "Params cannot be empty" if params.empty?
 			raise ArgumentError, "Missing one or more parameters" unless (params.has_key?("modid") && params.has_key?("version") && params.has_key?("changelog") && params.has_key?("ksp_ver") && params.has_key?("notify_followers") && params.has_key?("zipball"))

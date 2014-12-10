@@ -1,3 +1,9 @@
+0.2.2 (December ##, 2014)
+* Documented the whole gem
+* Changed RuntimeError raising to ArgumentError
+
+
+
 0.2.1 (November 20, 2014)
 * Added support for **POST** methods (Login, CreateMod, UpdateMod)
 * All methods now return an array containing the info you need. Example: `["name=test", "id=1337"]`
